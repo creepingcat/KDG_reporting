@@ -1,0 +1,58 @@
+18:46:45 SQL> 
+18:46:45 SQL> DROP TABLE KDGDoorEvents;
+
+Table dropped.
+
+Elapsed: 00:00:00.06
+18:46:45 SQL> CREATE TABLE KDGDoorEvents
+18:46:45   2  	(
+18:46:45   3  	  TimeReceived	  DATE,
+18:46:45   4  	  Type		  VARCHAR(100),
+18:46:45   5  	  LogCode	  VARCHAR(100),
+18:46:45   6  	  Description	  VARCHAR(100),
+18:46:45   7  	  Device	  VARCHAR(100),
+18:46:45   8  	  ParentDevice	  VARCHAR(100),
+18:46:45   9  	  Address	  VARCHAR(100),
+18:46:45  10  	  PersonnelRecord VARCHAR(100),
+18:46:45  11  	  Credential	  DECIMAL(38,0),
+18:46:45  12  	  Data_string	  VARCHAR(1000),
+18:46:45  13  	  Location	  VARCHAR(100)
+18:46:45  14  	)
+18:46:45  15  	ORGANIZATION EXTERNAL
+18:46:45  16  	(
+18:46:45  17  	  TYPE ORACLE_LOADER DEFAULT DIRECTORY KDG_REPORTING_DATA ACCESS PARAMETERS
+18:46:45  18  	  (
+18:46:45  19  	  records delimited BY newline
+18:46:45  20  	  skip 1
+18:46:45  21  	  badfile KDG_REPORTING_BAD:'kdg_rep_%a_%p.bad'
+18:46:45  22  	  logfile KDG_REPORTING_LOGS:'kdg_rep_%a_%p.log'
+18:46:45  23  	  fields terminated BY ',' OPTIONALLY ENCLOSED BY '"'
+18:46:45  24  	  missing field VALUES are NULL
+18:46:45  25  	  (
+18:46:45  26  	  TimeReceived CHAR DATE_FORMAT DATE MASK "mm/dd/yyyy hh24:mi:ss",
+18:46:45  27  	  Type ,
+18:46:45  28  	  LogCode ,
+18:46:45  29  	  Description ,
+18:46:45  30  	  Device ,
+18:46:45  31  	  ParentDevice ,
+18:46:45  32  	  Address ,
+18:46:45  33  	  PersonnelRecord ,
+18:46:45  34  	  Credential ,
+18:46:45  35  	  Data_string,
+18:46:45  36  	  Location
+18:46:45  37  	  )
+18:46:45  38  	  ) LOCATION ('KDG_Reporting_all.csv')
+18:46:45  39  	)
+18:46:45  40  	reject limit UNLIMITED ;
+
+Table created.
+
+Elapsed: 00:00:00.02
+18:46:46 SQL> 
+18:46:46 SQL> commit;
+
+Commit complete.
+
+Elapsed: 00:00:00.00
+18:46:46 SQL> 
+18:46:46 SQL> SPOOL OFF
